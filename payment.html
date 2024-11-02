@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page - Ankur Art School</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Title and Guide Button */
+        h1 {
+            font-size: 24px;
+            color: #6a0dad;
+            margin-bottom: 15px;
+            animation: colorChange 5s infinite alternate;
+        }
+
+        @keyframes colorChange {
+            0% { color: #6a0dad; }
+            100% { color: #ff4500; }
+        }
+
+        .guide-toggle {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #6a0dad;
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s ease;
+        }
+
+        .guide-toggle:hover {
+            background-color: #5c0dac;
+            transform: translateY(-3px);
+        }
+
+        /* Guide Section (Hidden by Default) */
+        .guide {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+            text-align: left;
+            line-height: 1.6;
+            display: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .guide.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Scanner Frame */
+        .scanner-frame {
+            position: relative;
+            width: 100%;
+            padding-top: 100%;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            animation: softNeonGlow 2s ease-in-out infinite alternate;
+            box-shadow: 0 0 12px rgba(106, 13, 173, 0.4), 0 0 24px rgba(106, 13, 173, 0.4);
+        }
+
+        .scanner-frame img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Soft Neon Glow Animation */
+        @keyframes softNeonGlow {
+            0% {
+                box-shadow: 0 0 8px rgba(106, 13, 173, 0.3), 0 0 16px rgba(106, 13, 173, 0.3), 
+                            0 0 24px rgba(255, 69, 0, 0.3), 0 0 32px rgba(255, 69, 0, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(106, 13, 173, 0.2), 0 0 20px rgba(106, 13, 173, 0.2), 
+                            0 0 30px rgba(255, 69, 0, 0.2), 0 0 40px rgba(255, 69, 0, 0.2);
+            }
+        }
+
+        /* Payment Options */
+        .payment-options {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .payment-options img {
+            width: 80px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .payment-options img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Form Section */
+        .form-frame {
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(106, 13, 173, 0.3), 0 0 16px rgba(106, 13, 173, 0.3);
+            text-align: center;
+        }
+
+        /* Confirm Button */
+        .confirm-button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #6a0dad;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s ease;
+            animation: softNeonGlow 2s ease-in-out infinite alternate;
+            display: none; /* Hidden by default */
+        }
+
+        .back-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #ff5722;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s, transform 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: #e64a19;
+            transform: translateY(-2px);
+        }
+
+        .success-message {
+            color: #4caf50;
+            font-size: 18px;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeInOut 3s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            25% { opacity: 1; }
+            75% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .guide {
+                font-size: 14px;
+            }
+
+            .payment-options img {
+                width: 60px;
+            }
+
+            .confirm-button, .back-button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Complete Your Payment</h1>
+        <button class="guide-toggle" onclick="toggleGuide()">Guide</button>
+
+        <!-- Guide Section -->
+        <div class="guide" id="guideSection">
+            <p>Follow these steps to complete your payment:</p>
+            <ol>
+                <li>Scan the QR code in the frame below with your preferred app.</li>
+                <li>Choose either <b>Google Pay</b> or <b>PhonePe</b> from the options below.</li>
+                <li>Complete the transaction and save your transaction ID.</li>
+                <li>Enter the transaction ID in the form below.</li>
+                <li>Click "Confirm Order" to finish the payment process.</li>
+            </ol>
+        </div>
+
+        <!-- Scanner Frame -->
+        <div class="scanner-frame">
+            <img src="images/scanner.png" alt="QR Code Scanner">
+        </div>
+
+        <!-- Payment Options -->
+        <div class="payment-options">
+            <a href="https://pay.google.com/" target="_blank">
+                <img src="images/gpay.png" alt="Google Pay">
+            </a>
+            <a href="https://www.phonepe.com/" target="_blank">
+                <img src="images/phonepay.png" alt="PhonePe">
+            </a>
+        </div>
+
+        <!-- Form Frame -->
+        <div class="form-frame">
+            <form id="paymentForm" onsubmit="return validateTransactionId()">
+                <label for="transactionId">Transaction ID:</label>
+                <input type="text" id="transactionId" name="transactionId" required style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                <button type="submit" class="confirm-button" id="confirmButton">Confirm Order</button>
+            </form>
+            <div class="success-message" id="successMessage">Payment Successful!</div>
+        </div>
+
+        <!-- Back to Course Button -->
+        <button class="back-button" onclick="window.location.href='course.html'">Back to Courses</button>
+    </div>
+
+    <script>
+        // Toggle guide section visibility
+        function toggleGuide() {
+            const guideSection = document.getElementById("guideSection");
+            guideSection.classList.toggle("active");
+        }
+
+        // Validate transaction ID
+        function validateTransactionId() {
+            const transactionId = document.getElementById("transactionId").value;
+            const successMessage = document.getElementById("successMessage");
+            const transactionIdPattern = /^[a-zA-Z0-9]{12}$/; // Adjust pattern as needed
+            const isValid = transactionIdPattern.test(transactionId);
+
+            if (isValid) {
+                // Show the success message
+            Message = 
+
+                // Redirect to the confirmation page after a delay
+                setTimeout(() => {
+                    window.location.href = 'class2.html';
+                }, 2000);
+            } else {
+                alert("Please enter a valid Transaction ID (check the payment app history).");
+            }
+
+            return false; // Prevent form submission
+        }
+
+        // Show the confirm button after loading
+        window.onload = function() {
+            const confirmButton = document.getElementById("confirmButton");
+            confirmButton.style.display = "block";
+        };
+    </script>
+</body>
+</html>

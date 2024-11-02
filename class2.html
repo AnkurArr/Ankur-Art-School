@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Class - Ankur Art School</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Banner Section */
+        .banner {
+            width: 100%;
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 2s ease;
+            background-color: #6a0dad; /* Initial Banner Color */
+        }
+
+        .banner h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .changing-text {
+            display: inline-block;
+            font-weight: bold;
+            transition: color 2s ease;
+            animation: blurFade 2s ease forwards;
+        }
+
+        /* Text Blur Animation */
+        @keyframes blurFade {
+            0% { opacity: 0; filter: blur(10px); }
+            100% { opacity: 1; filter: blur(0); }
+        }
+
+        /* Video Player */
+        .video-frame {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            animation: neonGlow 1.5s ease-in-out infinite alternate; /* Neon glow effect */
+            box-shadow: 0 0 20px rgba(106, 13, 173, 0.7), 0 0 30px rgba(106, 13, 173, 0.7);
+        }
+
+        @keyframes neonGlow {
+            0% {
+                box-shadow: 0 0 5px rgba(106, 13, 173, 1), 0 0 10px rgba(106, 13, 173, 1), 0 0 15px rgba(106, 13, 173, 1), 0 0 20px rgba(106, 13, 173, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(106, 13, 173, 1), 0 0 20px rgba(106, 13, 173, 1), 0 0 30px rgba(255, 69, 0, 1), 0 0 40px rgba(255, 69, 0, 0.7);
+            }
+        }
+
+        .video-frame iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+
+        /* Description Box */
+        .description-box {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideIn 1s ease forwards 1.5s;
+        }
+
+        .description-box h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #6a0dad;
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Notes Section */
+        .notes-section {
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 25px;
+            font-size: 16px;
+            background-color: #6a0dad;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #5c0dac;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 25px;
+            font-size: 16px;
+            background-color: #4b0082;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #6a0dad;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .banner h1 {
+                font-size: 28px;
+            }
+            .description-box h2 {
+                font-size: 20px;
+            }
+            .download-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Banner Section -->
+    <div class="banner" id="banner">
+        <h1>Recorded Class</h1>
+        <p>Unlock <span class="changing-text" id="changingText">Your Potential</span></p>
+    </div>
+
+    <div class="container">
+
+        <!-- Video Player Section -->
+        <div class="video-frame">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video Player" allowfullscreen></iframe>
+        </div>
+
+        <!-- Description Box -->
+        <div class="description-box">
+            <h2>Class Description</h2>
+            <p>This recorded session covers the fundamentals of drawing and shading techniques. Follow along to enhance your skills and learn valuable tips and tricks.</p>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="notes-section">
+            <h2>Download Class Notes</h2>
+            <a href="notes.pdf" class="download-btn" target="_blank">Download PDF Notes</a>
+        </div>
+
+        <!-- Back Button -->
+        <a href="course.html" class="back-btn">Back to Courses</a>
+    </div>
+
+    <script>
+        // Dynamic text and color change
+        const banner = document.getElementById("banner");
+        const changingText = document.getElementById("changingText");
+        const words = ["Your Potential", "Your Creativity", "Your Skills"];
+        const colorPairs = [
+            { bgColor: '#6a0dad', textColor: '#ffffff' },
+            { bgColor: '#ff4500', textColor: '#ffffff' },
+            { bgColor: '#0077b6', textColor: '#ffffff' },
+        ];
+
+        let index = 0;
+
+        function changeTextAndColor() {
+            changingText.textContent = words[index];
+            changingText.style.animation = 'blurFade 2s ease forwards';
+
+            banner.style.backgroundColor = colorPairs[index].bgColor;
+            changingText.style.color = colorPairs[index].textColor;
+
+            index = (index + 1) % words.length;
+        }
+
+        setInterval(changeTextAndColor, 4000);
+    </script>
+
+</body>
+</html>
