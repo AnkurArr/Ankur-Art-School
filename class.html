@@ -3,238 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Class - Ankur Art School</title>
-     <!-- Link to the logo for the favicon -->
-    <link rel="icon" href="IMG_4326.png" type="image/png">
+    <title>Enhanced Video Player with Dynamic Features</title>
     <style>
-    <style>
-        /* Basic Reset */
+        /* General Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        /* General Styles */
-        body {
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            overflow-x: hidden;
         }
 
+        /* Container */
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
             padding: 20px;
-        }
-
-        /* Banner Section */
-        .banner {
-            width: 100%;
-            padding: 80px 20px;
             text-align: center;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 2s ease;
-            background-color: #6a0dad; /* Initial Banner Color */
         }
 
-        .banner h1 {
-            font-size: 42px;
-            margin-bottom: 10px;
-        }
-
-        .changing-text {
-            display: inline-block;
+        /* Banner with Glow Effect */
+        .banner {
+            font-size: 1.5rem;
             font-weight: bold;
-            transition: color 2s ease;
-            animation: blurFade 2s ease forwards;
-        }
-
-        /* Text Blur Animation */
-        @keyframes blurFade {
-            0% { opacity: 0; filter: blur(10px); }
-            100% { opacity: 1; filter: blur(0); }
-        }
-
-        /* Video Player */
-        .video-frame {
-            position: relative;
+            padding: 20px;
+            color: white;
+            background-color: #800080; /* Default purple */
+            border-radius: 15px;
             width: 100%;
-            height: 0;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            margin: 20px auto;
-            overflow: hidden;
-            border-radius: 10px;
-            animation: neonGlow 1.5s ease-in-out infinite alternate; /* Neon glow effect */
-            box-shadow: 0 0 20px rgba(106, 13, 173, 0.7), 0 0 30px rgba(106, 13, 173, 0.7);
+            transition: background-color 1s ease, filter 0.5s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 15px rgba(128, 0, 128, 0.8); /* Initial glow */
         }
 
-        @keyframes neonGlow {
-            0% {
-                box-shadow: 0 0 5px rgba(106, 13, 173, 1), 0 0 10px rgba(106, 13, 173, 1), 0 0 15px rgba(106, 13, 173, 1), 0 0 20px rgba(106, 13, 173, 0.7);
-            }
-            100% {
-                box-shadow: 0 0 10px rgba(106, 13, 173, 1), 0 0 20px rgba(106, 13, 173, 1), 0 0 30px rgba(255, 69, 0, 1), 0 0 40px rgba(255, 69, 0, 0.7);
-            }
+        /* Changing Text with Blur Transition */
+        #changingText {
+            display: inline-block;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .text-blur-out {
+            opacity: 0;
+            transform: translateY(-10px) scale(1.1);
+        }
+
+        .text-blur-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Video Frame with Rounded Corners */
+        .video-frame {
+            margin-top: 20px;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(128, 0, 128, 0.8);
+            animation: pulseGlow 2s infinite;
         }
 
         .video-frame iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 10px;
         }
 
-        /* Description Box */
-        .description-box {
-            background-color: #ffffff;
+        /* Pulsating Glow Animation for Video Frame */
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(128, 0, 128, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(128, 0, 128, 1);
+            }
+        }
+
+        /* Card Style */
+        .card {
+            background: white;
+            border-radius: 15px;
             padding: 20px;
-            margin: 20px auto;
-            max-width: 800px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transform: translateY(20px);
-            opacity: 0;
-            animation: slideIn 1s ease forwards 1.5s;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s;
         }
 
-        .description-box h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #6a0dad;
+        .card:hover {
+            box-shadow: 0 0 20px rgba(128, 0, 128, 0.8);
         }
 
-        @keyframes slideIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
+        /* Toggle Buttons */
+        .toggle-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
 
-        /* Notes Section */
-        .notes-section {
-            max-width: 800px;
-            margin: 20px auto;
-            text-align: center;
-        }
-
-        .download-btn {
-            display: inline-block;
-            margin: 20px 0;
-            padding: 10px 25px;
-            font-size: 16px;
-            background-color: #6a0dad;
+        .toggle-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #800080;
             color: white;
             border: none;
-            border-radius: 5px;
-            text-decoration: none;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 0 10px;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.5s;
+            box-shadow: 0 0 10px rgba(128, 0, 128, 0.5); /* Glow effect */
         }
 
-        .download-btn:hover {
-            background-color: #5c0dac;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        .toggle-button:hover {
+            background-color: #9c27b0;
+            box-shadow: 0 0 15px rgba(156, 39, 176, 1);
+            transform: scale(1.05);
         }
 
-        /* Back Button */
-        .back-btn {
+        /* Content Section */
+        .content-section {
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            max-width: 90%;
+            margin: 20px auto;
+            text-align: left;
+            color: #333;
+            display: none;
+        }
+
+        .content-section.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+        }
+
+        /* Download Button with Glow Effect */
+        .download-button {
             display: inline-block;
-            margin: 20px 0;
-            padding: 10px 25px;
-            font-size: 16px;
-            background-color: #4b0082;
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #4ECDC4;
             color: white;
+            border: none;
             border-radius: 8px;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.2s ease;
             cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.8);
+            transition: box-shadow 0.5s, transform 0.3s;
         }
 
-        .back-btn:hover {
-            background-color: #6a0dad;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        .download-button:hover {
+            box-shadow: 0 0 15px rgba(78, 205, 196, 1);
+            transform: scale(1.05);
         }
 
-        /* Responsive Adjustments */
-        @media (max-width: 600px) {
-            .banner h1 {
-                font-size: 28px;
+        /* Back to Homepage Button with Animation */
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #800080;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.5s;
+            box-shadow: 0 0 10px rgba(128, 0, 128, 0.5); /* Glow effect */
+        }
+
+        .back-button:hover {
+            background-color: #9c27b0;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(156, 39, 176, 1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .banner {
+                font-size: 1.2rem;
             }
-            .description-box h2 {
-                font-size: 20px;
+            .toggle-button {
+                font-size: 0.9rem;
             }
-            .download-btn {
-                padding: 8px 16px;
-                font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .banner {
+                font-size: 1rem;
+                padding: 15px;
+            }
+            .toggle-button {
+                font-size: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
-
-    <!-- Banner Section -->
-    <div class="banner" id="banner">
-        <h1>Recorded Class</h1>
-        <p>Unlock <span class="changing-text" id="changingText">Your Potential</span></p>
-    </div>
-
     <div class="container">
+        <!-- Banner with Dynamic Glow and Text -->
+        <div class="banner" id="banner">
+            Watch Our Latest <span id="changingText" class="text-blur-in">Video Lecture</span>
+        </div>
 
-        <!-- Video Player Section -->
+        <!-- Video Player Frame with Rounded Corners -->
         <div class="video-frame">
-            <iframe src="https://youtube.com/embed/XOVek1bOO6g?si=9XaVMXfRG_7Cq8Kq" title="Video Player" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
         </div>
 
-        <!-- Description Box -->
-        <div class="description-box">
-            <h2>Class Description</h2>
-            <p>This recorded session covers the fundamentals of drawing and shading techniques. Follow along to enhance your skills and learn valuable tips and tricks.</p>
+        <!-- Toggle Buttons -->
+        <div class="toggle-buttons">
+            <button class="toggle-button" onclick="showContent('description')">Description</button>
+            <button class="toggle-button" onclick="showContent('notes')">Notes</button>
         </div>
 
-        <!-- Notes Section -->
-        <div class="notes-section">
-            <h2>Download Class Notes</h2>
-            <a href="Best_Figure_Drawing_Notes.pdf.pdf" class="download-btn" target="_blank">Download PDF Notes</a>
+        <!-- Content Sections within a single Card -->
+        <div class="card">
+            <div class="content-section active" id="description">
+                <div class="content-text">
+                    This video covers key topics with in-depth explanations on fundamental principles.
+                </div>
+            </div>
+
+            <div class="content-section" id="notes">
+                <div class="content-text">
+                    <ul>
+                        <li>Topic 1: Key concepts explained</li>
+                        <li>Topic 2: Practical examples</li>
+                        <li>Topic 3: Exercises and applications</li>
+                    </ul>
+                    <a href="your-notes-file.pdf" class="download-button" download>Download Notes</a>
+                </div>
+            </div>
         </div>
 
-        <!-- Back Button -->
-        <a href="course.html" class="back-btn">Back to Courses</a>
+        <!-- Back to Homepage Button -->
+        <a href="https://yourhomepage.com" class="back-button">Back to Homepage</a>
     </div>
-
     <script>
-        // Dynamic text and color change
-        const banner = document.getElementById("banner");
-        const changingText = document.getElementById("changingText");
-        const words = ["Your Potential", "Your Creativity", "Your Skills"];
-        const colorPairs = [
-            { bgColor: '#6a0dad', textColor: '#ffffff' },
-            { bgColor: '#ff4500', textColor: '#ffffff' },
-            { bgColor: '#0077b6', textColor: '#ffffff' },
-        ];
+// Banner color and glow update with changing text
+const banner = document.getElementById("banner");
+const changingText = document.getElementById("changingText");
+const phrases = ["Video Lecture", "Class Guide", "In-Depth Tutorial", "Learning Session"];
+const colors = ["#FF6B6B", "#4ECDC4", "#556270", "#C7F464", "#FFC857"];
+let phraseIndex = 0;
+let colorIndex = 0;
 
-        let index = 0;
+function changeTextAndColor() {
+    changingText.classList.remove("text-blur-in");
+    changingText.classList.add("text-blur-out");
 
-        function changeTextAndColor() {
-            changingText.textContent = words[index];
-            changingText.style.animation = 'blurFade 2s ease forwards';
+    setTimeout(() => {
+        // Update text and banner color
+        changingText.textContent = phrases[phraseIndex];
+        banner.style.backgroundColor = colors[colorIndex];
+        banner.style.boxShadow = `0 0 15px ${colors[colorIndex]}`;
+        
+        // Update indices for next text and color
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        colorIndex = (colorIndex + 1) % colors.length;
 
-            banner.style.backgroundColor = colorPairs[index].bgColor;
-            changingText.style.color = colorPairs[index].textColor;
+        changingText.classList.remove("text-blur-out");
+        changingText.classList.add("text-blur-in");
+    }, 300); // Match the timeout with the CSS transition time
+}
 
-            index = (index + 1) % words.length;
-        }
+// Show content based on the button clicked
+function showContent(contentType) {
+    const description = document.getElementById("description");
+    const notes = document.getElementById("notes");
+    
+    // Hide current content and show the requested one
+    if (contentType === 'description') {
+        description.classList.add("active");
+        notes.classList.remove("active");
+    } else if (contentType === 'notes') {
+        notes.classList.add("active");
+        description.classList.remove("active");
+    }
+}
 
-        setInterval(changeTextAndColor, 4000);
-    </script>
-
+// Initial call to change text and color every 4 seconds
+setInterval(changeTextAndColor, 4000);
+</script>
 </body>
 </html>
