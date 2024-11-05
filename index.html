@@ -3,158 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ankur Art LMS - Home</title>
-    <!-- Link to the logo for the favicon -->
-    <link rel="icon" href="IMG_4326.png" type="image/png">
+    <title>Ankur Art School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Basic Reset */
-        * {
+        body {
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background-color: white;
         }
 
-        /* General Styles */
-        body, html {
-            font-family: Arial, sans-serif;
-            height: 100%;
-            overflow: hidden;
-            color: white;
-        }
-
-        /* Full-Screen Banner Styles */
         .banner {
-            width: 100%;
-            height: 100vh; /* Full viewport height */
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            transition: background-color 2s ease; /* Smooth color transition */
             padding: 20px;
+            background-color: #e6e6fa; /* Initial color */
+            transition: background 1s ease;
         }
 
-        .banner h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-
-        /* Text Animation */
-        .changing-text {
-            display: inline-block;
-            font-weight: bold;
+        .banner-text {
             position: relative;
-            transition: color 2s ease; /* Smooth text color transition */
-            animation: blurFade 2s ease forwards;
         }
 
-        /* Blur and Fade Animation for Text */
-        @keyframes blurFade {
-            0% {
-                opacity: 0;
-                filter: blur(10px);
-            }
-            50% {
-                opacity: 0.5;
-                filter: blur(5px);
-            }
-            100% {
-                opacity: 1;
-                filter: blur(0);
-            }
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: #333;
         }
 
-        /* Start Learning Button */
-        .start-btn {
-            margin-top: 20px;
+        h2 {
+            font-size: 1.8rem;
+            margin: 10px 0 20px 0; /* Reduced margin for tighter spacing */
+            color: #333;
+        }
+
+        .start-learning-button {
             padding: 15px 30px;
-            font-size: 1.2em;
-            background-color: #ffeb3b;
-            color: #6a0dad;
+            font-size: 1.5rem;
+            color: white;
+            background-color: #ffcc00;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: transform 0.3s ease;
-            text-decoration: none; /* Remove underline */
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 20px; /* Added gap above the button */
+        }
+
+        .start-learning-button:hover {
+            background-color: #ffa500;
+            box-shadow: 0 0 20px #ffa500, 0 0 40px #ffa500;
+        }
+
+        .dynamic-word {
             display: inline-block;
+            transition: opacity 0.5s ease, color 0.5s ease, filter 0.5s ease;
+            color: white;
         }
 
-        .start-btn:hover {
-            transform: scale(1.1);
+        .content {
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Responsive Styles */
+        h2.content-title {
+            margin-top: 5px; /* Reduced margin for tighter spacing */
+        }
+
+        .slider-card {
+            max-width: 450px;
+            margin: 15px auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative; /* Position relative for title absolute positioning */
+            transition: box-shadow 0.5s ease;
+        }
+
+        .slider-title {
+            font-size: 1.5rem;
+            text-align: center;
+            position: absolute;
+            top: 10px; /* Positioning the title */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 204, 0, 0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: opacity 0.5s ease;
+            z-index: 10; /* Ensures title is above slides */
+        }
+
+        .slider {
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.8s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: #fff;
+        }
+
+        .slide img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .discount-section {
+            background-color: #ffcc00;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden; /* To prevent text overflow */
+        }
+
+        .marquee {
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            animation: marquee 10s linear infinite;
+            font-size: 1.5rem;
+            padding-left: 100%; /* Start position off-screen */
+        }
+
+        @keyframes marquee {
+            0% { transform: translate(0); }
+            100% { transform: translate(-100%); }
+        }
+
+        .discount-section h3 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
         @media (max-width: 768px) {
-            .banner h1 {
-                font-size: 2.5em;
-            }
-            .start-btn {
-                font-size: 1em;
-                padding: 12px 24px;
-            }
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.5rem; }
+            .start-learning-button { font-size: 1.2rem; padding: 10px 20px; }
+            .slider-card { max-width: 360px; }
+            .slider-title { font-size: 1.2rem; }
         }
 
         @media (max-width: 480px) {
-            .banner h1 {
-                font-size: 2em;
-            }
-            .start-btn {
-                font-size: 0.9em;
-                padding: 10px 20px;
-            }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.2rem; }
+            .start-learning-button { font-size: 1rem; padding: 8px 16px; }
+            .slider-card { max-width: 300px; }
+            .slider-title { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Banner Section -->
     <div class="banner" id="banner">
-        <h1>Welcome to Ankur Art School</h1>
-        <p>Unleash <span class="changing-text" id="changingText">Your Creativity</span></p>
-        
-        <!-- Start Learning Button linking to another page -->
-        <a href="course.html" class="start-btn">Start Learning</a>
+        <div class="banner-text">
+            <h1>Welcome to Ankur Art School</h1>
+            <h2>Learn to draw <span id="dynamic-word" class="dynamic-word">beautifully</span></h2>
+            <a href="course.html" class="start-learning-button" id="start-button">Start Learning</a>
+        </div>
     </div>
 
+    <div class="content">
+        <h2 class="content-title">Our Courses</h2>
+        <p style="margin-top: 5px;">Explore a variety of courses designed for all skill levels.</p>
+    </div>
+
+    <div class="slider-card" id="slider-card">
+        <div class="slider-title" id="slider-title">Featured Courses</div>
+        <div class="slider">
+            <div class="slides" id="slides">
+                <div class="slide"><img src="IMG_4375.png" alt="Course Image 1"></div>
+                <div class="slide"><img src="IMG_4373.png" alt="Course Image 2"></div>
+                <div class="slide"><img src="IMG_4319.png" alt="Course Image 3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="discount-section">
+        <h3>Exclusive Offer!</h3>
+        <div class="marquee">
+            <div class="marquee-text">Get 80% off on your first course enrollment! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Ankur Art School. All rights reserved.</p>
+    </footer>
+
     <script>
-        // JavaScript for changing text and dynamic color transitions
-        const changingText = document.getElementById('changingText');
-        const banner = document.getElementById('banner');
+        const words = ["beautifully", "creatively", "passionately", "masterfully", "uniquely"];
+        const banner = document.getElementById("banner");
+        const sliderCard = document.getElementById("slider-card");
+        let currentIndex = 0;
 
-        const words = ["Your Creativity", "New Skills", "Mastery", "Artistry"];
-        const colorPairs = [
-            { bgColor: "#6a0dad", textColor: "#ffeb3b" },
-            { bgColor: "#b145f3", textColor: "#ffffff" },
-            { bgColor: "#4b0082", textColor: "#ff6347" },
-            { bgColor: "#00bfff", textColor: "#ffffff" }
-        ];
-
-        let index = 0;
-
-        function changeTextAndColor() {
-            // Remove the animation class to reset the animation
-            changingText.style.animation = 'none';
-            
-            // Update the text content
-            changingText.textContent = words[index];
-            
-            // Trigger reflow to restart the animation
-            void changingText.offsetWidth;
-            
-            // Reapply the animation class
-            changingText.style.animation = 'blurFade 2s ease forwards';
-            
-            // Update banner background and text color smoothly
-            banner.style.backgroundColor = colorPairs[index].bgColor;
-            changingText.style.color = colorPairs[index].textColor;
-
-            // Move to the next index
-            index = (index + 1) % words.length;
+        function changeWord() {
+            const dynamicWord = document.getElementById("dynamic-word");
+            dynamicWord.style.opacity = 0;
+            dynamicWord.style.filter = "blur(5px)";
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % words.length;
+                dynamicWord.textContent = words[currentIndex];
+                dynamicWord.style.opacity = 1;
+                dynamicWord.style.filter = "blur(0px)";
+            }, 500);
         }
 
-        // Change text and colors every 3 seconds
-        setInterval(changeTextAndColor, 3000);
-    </script>
+        const colors = ['#e6e6fa', '#ffcc00', '#add8e6', '#f0e68c', '#ffe4e1'];
+        let colorIndex = 0;
 
+        function changeBannerColor() {
+            banner.style.backgroundColor = colors[colorIndex];
+            sliderCard.style.boxShadow = `0 0 20px 5px ${colors[colorIndex]}`;
+            colorIndex = (colorIndex + 1) % colors.length;
+        }
+
+        let slideIndex = 0;
+
+        function showSlides() {
+            const slides = document.getElementById("slides");
+            slideIndex++;
+            if (slideIndex >= slides.children.length) { slideIndex = 0; }
+            slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+        }
+
+        changeBannerColor();
+        setInterval(changeWord, 3000);
+        setInterval(showSlides, 5000); // Change slide every 5 seconds
+        setInterval(changeBannerColor, 3000); // Change banner color every 3 seconds
+
+        function fadeGlowEffect() {
+            const currentColor = colors[colorIndex];
+            sliderCard.style.boxShadow = `0 0 20px 5px ${currentColor}`;
+            sliderCard.style.transition = "box-shadow 1s ease-in-out";
+
+            setTimeout(() => {
+                sliderCard.style.boxShadow = "0 0 0px transparent";
+            }, 1000);
+        }
+
+        setInterval(fadeGlowEffect, 3000); // Change glow every 3 seconds
+    </script>
 </body>
 </html>
