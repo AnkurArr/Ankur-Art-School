@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - Art Course</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+            position: relative;
+            transition: opacity 1s ease;
+        }
+
+        /* Coming Soon Card Styling */
+        .coming-soon-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: glow 2s infinite alternate;
+            z-index: 1;
+            transition: filter 0.5s ease;
+        }
+
+        /* Blur effect */
+        .blurred {
+            filter: blur(4px);
+        }
+
+        /* Glow effect */
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+            100% { box-shadow: 0 0 30px rgba(255, 215, 0, 1); }
+        }
+
+        /* Title Styling */
+        .coming-soon-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        /* Short Note Styling */
+        .short-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Animated Text */
+        .animated-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #FF6347;
+            margin-bottom: 20px;
+            transition: filter 0.5s ease;
+        }
+
+        /* Button Styling */
+        .notify-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.5);
+        }
+
+        .notify-btn:hover {
+            background-color: #0056b3;
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.7);
+        }
+
+        /* Integration Message */
+        .integration-message {
+            display: none;
+            font-size: 1.1rem;
+            color: #28a745;
+            margin-top: 20px;
+            animation: fadeIn 1s;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Popup Card for Redirect Message */
+        .popup-card {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #FFC107;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+            z-index: 10;
+            width: 200px;
+        }
+
+        /* Zooming "A" Animation */
+        .zooming-letter {
+            font-size: 2rem;
+            color: #FF4500;
+            animation: zoomInOut 1s infinite ease-in-out;
+            margin: 0 auto 10px;
+        }
+
+        /* Zoom In and Out Animation */
+        @keyframes zoomInOut {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* Redirect Message */
+        .redirect-message {
+            font-size: 1rem;
+            color: #fff; /* Changed to white */
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Coming Soon Card -->
+    <div class="coming-soon-card" id="coming-soon-card">
+        <div class="coming-soon-title">Art Course</div>
+        <p class="short-note">Our new art course is on its way!</p>
+        <div class="animated-text" id="animated-text">Coming Soon!</div>
+        <button class="notify-btn" onclick="notifyUser()">Notify Me</button>
+        <div class="integration-message" id="integration-message">Thank you for signing up!</div>
+    </div>
+
+    <!-- Popup Card for Redirect Message -->
+    <div class="popup-card" id="popup-card">
+        <div class="zooming-letter">A</div> <!-- Zooming "A" animation -->
+        <div class="redirect-message" id="redirect-message">Redirecting to Course Page...</div>
+    </div>
+
+    <script>
+        const animatedText = document.getElementById('animated-text');
+        const messages = ["Coming Soon!", "Get Ready!", "Stay Tuned!"];
+        let index = 0;
+
+        function changeText() {
+            animatedText.style.filter = 'blur(4px)';
+            setTimeout(() => {
+                index = (index + 1) % messages.length;
+                animatedText.textContent = messages[index];
+                animatedText.style.filter = 'blur(0)';
+            }, 500);
+        }
+
+        setInterval(changeText, 3000);
+
+        function notifyUser() {
+            const message = document.getElementById('integration-message');
+            const popupCard = document.getElementById('popup-card');
+            const comingSoonCard = document.getElementById('coming-soon-card');
+
+            // Show integration message
+            message.style.display = 'block';
+
+            // After 2 seconds, hide the integration message and show the popup card
+            setTimeout(() => {
+                message.style.display = 'none';
+                comingSoonCard.classList.add('blurred');
+                popupCard.style.display = 'block';
+            }, 2000);
+
+            // After an additional 3 seconds (5 seconds total), redirect
+            setTimeout(() => {
+                window.location.href = 'course.html';
+            }, 5000); // Increase visibility of redirect message
+        }
+    </script>
+</body>
+</html>
