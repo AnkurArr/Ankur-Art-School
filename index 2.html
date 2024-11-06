@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Course - Units and Chapters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: Arial, sans-serif;
+            backgroundt-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        /* Banner Styling */
+        .banner {
+            padding: 40px 20px;
+            text-align: center;
+            color: #333;
+            font-size: 1.8rem;
+            font-weight: bold;
+            position: relative;
+            animation: colorChange 10s infinite alternate;
+        }
+
+        /* Color Change Animation */
+        @keyframes colorChange {
+            0% { background-color: #ffdd57; }
+            33% { background-color: #6a1b9a; color: #ffffff; }
+            66% { background-color: #2196f3; color: #ffffff; }
+            100% { background-color: #43a047; color: #ffffff; }
+        }
+
+        /* Banner Text Animation */
+        .animated-text {
+            display: inline-block;
+            position: relative;
+            color: #fff;
+        }
+
+        .changing-text {
+            display: inline-block;
+            color: #fff;
+            animation: blurFade 6s infinite;
+        }
+
+        @keyframes blurFade {
+            0%, 25% {
+                opacity: 0;
+                transform: scale(0.8);
+                filter: blur(5px);
+            }
+            35%, 75% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0px);
+            }
+            85%, 100% {
+                opacity: 0;
+                transform: scale(0.8);
+                filter: blur(5px);
+            }
+        }
+
+        /* Start Learning Button */
+        .start-btn {
+            background-color: #ffcc00; /* Dark Yellow */
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+
+        .start-btn:hover {
+            background-color: #ffb300;
+            transform: scale(1.05);
+        }
+
+        /* Filter Section */
+        .filter-section {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .filter-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 15px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .filter-btn {
+            background-color: #6a1b9a;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .filter-btn:hover {
+            background-color: #8e24aa;
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+
+
+        /* Units Section */
+        .units-section {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .unit-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .unit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .unit-title {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Chapter Card */
+        .chapter-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 0 15px rgba(106, 27, 154, 0.3);
+            animation: glowAnimation 4s infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Glow Effect Animation */
+        @keyframes glowAnimation {
+            0% { box-shadow: 0 0 15px rgba(106, 27, 154, 0.3); }
+            100% { box-shadow: 0 0 25px rgba(106, 27, 154, 0.6); }
+        }
+
+        .chapter-title {
+            font-size: 1rem;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        /* Free/Paid Label */
+        .label {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            color: #fff;
+            font-weight: bold;
+            animation: labelFade 1.5s infinite;
+        }
+        .label.free {
+            background-color: #28a745; /* Green for free */
+        }
+        .label.paid {
+            background-color: #dc3545; /* Red for paid */
+        }
+
+        @keyframes labelFade {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        /* Difficulty Label */
+        .difficulty-label {
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: #6a1b9a;
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        /* Chapter Footer */
+        .chapter-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .uploader {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        /* Start Button for Chapter */
+        .start-btn-chapter {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .start-btn-chapter:hover {
+            background-color: #ffb300;
+        }
+
+        /* Discount Banner */
+        .discount-banner {
+            background-color: #FFD700; /* Dark yellow */
+            color: #333;
+            text-align: center;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            position: relative;
+            border-radius: 10px; /* Rounded corners */
+            margin: 20px auto;
+            max-width: 90%;
+            overflow: hidden;
+        }
+
+        .discount-banner-title {
+            color: black;
+            font-size: 1.2rem;
+            font-weight: bold;
+            position: relative;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
+        }
+
+        .marquee-text {
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-text span {
+            display: inline-block;
+            animation: scroll-left 10s linear infinite;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Back to Home Button */
+        .back-home-btn {
+            background-color: #4B0082; /* Dark purple */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
+        /* Back to Home Button */
+        .back-home-btn {
+            background-color: #4B0082; /* Dark purple */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .back-home-btn:hover {
+            background-color: #551A8B; /* Darker purple */
+            transform: scale(1.05);
+        }
+        /* Footer */
+        .footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Banner -->
+    <div class="banner">
+        Welcome to <span class="animated-text">Art Course - <span class="changing-text">Basics</span></span>
+        <button class="start-btn" onclick="document.getElementById('units').scrollIntoView({ behavior: 'smooth' });">Start Learning</button>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <div class="filter-title">Filter Courses</div>
+        <div class="filter-container">
+            <button class="filter-btn" onclick="filterCourses('all')">All</button>
+            <button class="filter-btn" onclick="filterCourses('easy')">Easy</button>
+            <button class="filter-btn" onclick="filterCourses('hard')">Hard</button>
+        </div>
+    </div>
+
+    <!-- Units and Chapters Section -->
+    <div id="units" class="units-section">
+        
+        <!-- Unit 1 -->
+        <div class="unit-card">
+            <div class="unit-title">Unit 1: Introduction to Art</div>
+            
+            <!-- Chapter 1.1 -->
+            <div class="chapter-card" data-difficulty="easy">
+                <div class="label free">Easy</div>
+                <div class="chapter-title">Chapter 1.1: Understanding Art Forms</div>
+                <div class="chapter-description">Learn about various forms of art and their significance.</div>
+                <div class="chapter-footer">
+                    <div class="uploader">Uploaded by Soham Dutta</div>
+                    <button class="start-btn-chapter"onclick="window.location.href='class.html';">Start</button>
+                </div>
+            </div>
+
+            <!-- Chapter 1.2 -->
+            <div class="chapter-card" data-difficulty="hard">
+                <div class="label paid">Hard</div>
+                <div class="chapter-title">Chapter 1.2: The Elements of Art</div>
+                <div class="chapter-description">Explore the basic elements that make up art.</div>
+                <div class="chapter-footer">
+                    <div class="uploader">Uploaded by Soham Dutta</div>
+                    <button class="start-btn-chapter"onclick="window.location.href='coming.html';">Start</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unit 2 -->
+        <div class="unit-card">
+            <div class="unit-title">Unit 2: Techniques and Mediums</div>
+            
+            <!-- Chapter 2.1 -->
+            <div class="chapter-card" data-difficulty="hard">
+                <div class="label paid">Hard</div>
+                <div class="chapter-title">Chapter 2.1: Drawing Techniques</div>
+                <div class="chapter-description">Master the fundamentals of drawing with various techniques.</div>
+                <div class="chapter-footer">
+                    <div class="uploader">Uploaded by Soham Dutta</div>
+                    <button class="start-btn-chapter"window.location.href='coming.html';">Start</button>
+                </div>
+            </div>
+
+            <!-- Chapter 2.2 -->
+            <div class="chapter-card" data-difficulty="easy"> 
+                <div class="label free">Easy</div>
+                <div class="chapter-title">Chapter 2.2: Painting Mediums</div>
+                <div class="chapter-description">Learn about different painting mediums and their effects.</div>
+                <div class="chapter-footer">
+                    <div class="uploader">Uploaded by Soham Dutta</div>
+                    <button class="start-btn-chapter"window.location.href='coming.html';">Start</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- Discount Banner -->
+    <div class="discount-banner">
+        <div class="discount-banner-title">‼️IMPORTANT NOTICE‼️</div>
+        <div class="marquee-text">
+            <span>please do not forget the transuction id for re-enter the course!</span>
+        </div>
+    </div>
+
+    <!-- Back to Home Button -->
+    <button class="back-home-btn" onclick="window.location.href='course.html';">Back to course</button>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 Ankur Art School. All rights reserved.
+    </div>
+
+    <script>
+        function filterCourses(difficulty) {
+            const chapters = document.querySelectorAll('.chapter-card');
+            chapters.forEach(chapter => {
+                if (difficulty === 'all') {
+                    chapter.style.display = 'block';
+                } else if (chapter.getAttribute('data-difficulty') === difficulty) {
+                    chapter.style.display = 'block';
+                } else {
+                    chapter.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
