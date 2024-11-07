@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ankur Art Quiz</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/gsap.min.js"></script>
+  <style>
+    /* Styling the quiz container */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f0f0f0;
+    }
+    .quiz-container {
+      background-color: #fff;
+      width: 90%;
+      max-width: 600px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      position: relative;
+    }
+    #progress-bar {
+      height: 8px;
+      background-color: #4caf50;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      transition: width 0.3s ease;
+    }
+    #question-text {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    #choices-container button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1.1em;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #f0f0f0;
+      transition: background-color 0.3s ease;
+    }
+    #choices-container button.selected {
+      background-color: #d0e7ff;
+    }
+    #choices-container button.correct {
+      background-color: #d0e7ff;
+      color: white;
+    }
+    #choices-container button.incorrect {
+      background-color: #d0e7ff;
+      color: white;
+    }
+    #next-button, #submit-button {
+      display: none;
+      padding: 10px 20px;
+      margin-top: 20px;
+      font-size: 1.1em;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  
+    .countdown-container {
+      display: none;
+      font-size: 1.2em;
+      color: #f44336;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .locked {
+      opacity: 0.5;
+      pointer-events: none;
+      background-color: #ddd;
+      color: #888;
+    }
+    .button-active {
+      pointer-events: auto;
+      background-color: #28a745;
+      color: #fff;
+    }
+    .download-btn {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1.1em;
+      display: inline-block;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div id="progress-bar"></div>
+    <div id="question-container">
+      <h2 id="question-text"></h2>
+      <div id="choices-container"></div>
+      <button id="next-button" onclick="nextQuestion()">Next</button>
+      <button id="submit-button" onclick="submitQuiz()">Submit</button>
+    </div>
+    <div class="countdown-container" id="countdown-container">
+      <p>You didn’t pass. Retake the quiz in:</p>
+      <div id="timer">01:00:00</div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { text: "What is the color of the sky?", choices: ["Blue", "Red", "Green", "Yellow"], correct: 0 },
+      { text: "What is 2 + 2?", choices: ["3", "4", "5", "6"], correct: 1 },
+      { text: "Which is the largest planet?", choices: ["Earth", "Jupiter", "Mars", "Saturn"], correct: 1 },
+      { text: "What is the boiling point of water?", choices: ["90°C", "100°C", "110°C", "120°C"], correct: 1 }
+    ];
+
+    const passMark = 0.75;
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let userAnswers = [];
+    let countdownTime = 0;
+
+    const questionText = document.getElementById("question-text");
+    const choicesContainer = document.getElementById("choices-container");
+    const nextButton = document.getElementById("next-button");
+    const submitButton = document.getElementById("submit-button");
+    const countdownContainer = document.getElementById("countdown-container");
+    const timerElement = document.getElementById("timer");
+    const progressBar = document.getElementById("progress-bar");
+
+    function loadQuestion() {
+      const question = questions[currentQuestionIndex];
+      questionText.textContent = question.text;
+      choicesContainer.innerHTML = "";
+
+      question.choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+        button.textContent = choice;
+        button.onclick = () => selectAnswer(button, index);
+        choicesContainer.appendChild(button);
+      });
+
+      updateProgress();
+      nextButton.style.display = "block";
+      nextButton.disabled = true;
+      submitButton.style.display = "none";
+    }
+
+    function selectAnswer(button, index) {
+      Array.from(choicesContainer.children).forEach(btn => {
+        btn.disabled = true; // Disable all other buttons once one is clicked
+      });
+
+      // Mark selected button as 'selected'
+      button.classList.add("selected");
+      
+      // Store the answer (index of the selected choice)
+      userAnswers[currentQuestionIndex] = { answer: index, isCorrect: index === questions[currentQuestionIndex].correct };
+
+      // Mark correct or incorrect choice
+      if (index === questions[currentQuestionIndex].correct) {
+        button.classList.add("correct");
+        score++; // Increase score if answer is correct
+      } else {
+        button.classList.add("incorrect");
+      }
+
+      // Enable Next button
+      nextButton.disabled = false;
+
+      // Enable Submit button on last question
+      if (currentQuestionIndex === questions.length - 1) {
+        submitButton.style.display = "block";
+        nextButton.style.display = "none";
+      }
+
+      saveProgress();
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      loadQuestion();
+      saveProgress();
+    }
+
+    function submitQuiz() {
+      const passThreshold = questions.length * passMark;
+      const isPassed = score >= passThreshold;
+
+      questionText.innerHTML = `<h2>Quiz Results</h2>`;
+      choicesContainer.innerHTML = `<p>Your Score: ${score} / ${questions.length}</p>`;
+      submitButton.style.display = "none";
+
+      if (isPassed) {
+        choicesContainer.innerHTML += '<a href="certificate.html" class="download-btn" target="_blank">Download Certificate</a>';
+      } else {
+        countdownContainer.style.display = "block";
+        startCountdown();
+      }
+    }
+
+    function updateProgress() {
+      // Calculate progress based on the number of correct answers out of total questions
+      const correctAnswers = userAnswers.filter(answer => answer.isCorrect).length;
+      const progress = (correctAnswers / questions.length) * 100;
+      progressBar.style.width = progress + "%";
+    }
+
+    function startCountdown() {
+      countdownTime = 60 * 60;
+      const interval = setInterval(() => {
+        if (countdownTime <= 0) {
+          clearInterval(interval);
+          resetQuiz();
+        } else {
+          const hours = Math.floor(countdownTime / 3600);
+          const minutes = Math.floor((countdownTime % 3600) / 60);
+          const seconds = countdownTime % 60;
+          timerElement.textContent = `${padTime(hours)}:${padTime(minutes)}:${padTime(seconds)}`;
+          countdownTime--;
+        }
+      }, 1000);
+    }
+
+    function resetQuiz() {
+      countdownContainer.style.display = "none";
+      currentQuestionIndex = 0;
+      score = 0;
+      userAnswers = [];
+      loadQuestion();
+    }
+
+    function saveProgress() {
+      localStorage.setItem("currentQuestionIndex", currentQuestionIndex);
+      localStorage.setItem("score", score);
+      localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+    }
+
+    function padTime(time) {
+      return time < 10 ? "0" + time : time;
+    }
+
+    window.onload = function() {
+      loadQuestion();
+    }
+  </script>
+</body>
+</html>

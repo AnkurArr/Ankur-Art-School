@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #333;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        #certificate-form {
+            margin-bottom: 30px;
+            animation: slideIn 1.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateY(-50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        #certificate-form input {
+            padding: 15px;
+            font-size: 18px;
+            width: 80%;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        #certificate-form input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        #certificate-form button {
+            padding: 12px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #certificate-form button:hover {
+            background-color: #45a049;
+        }
+
+        .certificate-container {
+            position: relative;
+            display: none;
+            margin-top: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .certificate-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .name-on-certificate {
+            position: absolute;
+            bottom: 57%;
+            left: 36%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: "Tangerine", cursive;
+            color: black;
+            opacity: 0;
+            animation: fadeInText 1s ease-out forwards;
+        }
+
+        @keyframes fadeInText {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .download-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Media queries for responsiveness */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .certificate-img {
+                max-width: 100%;
+            }
+
+            .name-on-certificate {
+                font-size: 1.5rem;
+            }
+
+            #certificate-form input, #certificate-form button {
+                width: 100%;
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Automatic Certificate Generator</h1>
+        
+        <!-- Input form -->
+        <form id="certificate-form">
+            <label for="name">Enter Your Name:</label><br>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            <button type="submit">Generate Certificate</button>
+        </form>
+
+        <!-- Certificate preview -->
+        <div id="certificate-container" class="certificate-container">
+            <img src="IMG_4396.jpeg" alt="Certificate Template" class="certificate-img" id="certificate-img">
+            <div id="name-on-certificate" class="name-on-certificate"></div>
+            <button id="download-btn" class="download-btn">Download Certificate</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("certificate-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            // Get the name entered by the user
+            const name = document.getElementById("name").value;
+            
+            // Display the certificate container
+            const certificateContainer = document.getElementById("certificate-container");
+            certificateContainer.style.display = "block";
+            
+            // Set the name on the certificate
+            const nameOnCertificate = document.getElementById("name-on-certificate");
+            nameOnCertificate.textContent = name;
+
+            // Show the download button
+            const downloadButton = document.getElementById("download-btn");
+            downloadButton.style.display = "inline-block";
+            
+            // Enable download functionality
+            downloadButton.addEventListener("click", function() {
+                const img = document.getElementById("certificate-img");
+                
+                // Create a high-res canvas
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d");
+                
+                // Set canvas size to the original image size * 4 for ultra high resolution (Increase scale factor)
+                const scaleFactor = 7;  // Increased scale factor for higher quality
+                canvas.width = img.width * scaleFactor;
+                canvas.height = img.height * scaleFactor;
+
+                // Draw the certificate image on the high-res canvas
+                context.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                // Draw the name on the certificate
+                context.font = `${18 * scaleFactor}px "Tangerine", cursive`;  // Adjust font size for ultra-high resolution
+                context.fillStyle = "black";
+                context.textAlign = "center";
+                context.textBaseline = "middle";
+                context.fillText(name, canvas.width / 2, canvas.height * 0.50);
+                
+                // Create a link to download the high-res certificate
+                const link = document.createElement("a");
+                link.download = `${name}_certificate.png`;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>
