@@ -3,295 +3,389 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Video Player with Dynamic Features</title>
+    <title>Online Class Streaming</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* General Reset */
-        * {
+        body {
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            background-color: white;
         }
-
-        /* Container */
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* Banner with Glow Effect */
+        /* Banner Section */
         .banner {
-            font-size: 1.5rem;
-            font-weight: bold;
-            padding: 20px;
             color: white;
-            background-color: #800080; /* Default purple */
-            border-radius: 15px;
-            width: 100%;
-            transition: background-color 1s ease, filter 0.5s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 15px rgba(128, 0, 128, 0.8); /* Initial glow */
+            text-align: center;
+            padding: 40px 20px;
+             background-color: #6A5ACD; 
+            transition: background-color 2s ease;
         }
-
-        /* Changing Text with Blur Transition */
-        #changingText {
+        .banner h1 {
+            font-size: 28px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+        .banner .changing-word {
+            transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s;
             display: inline-block;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            font-weight: 700;
         }
-
-        .text-blur-out {
-            opacity: 0;
-            transform: translateY(-10px) scale(1.1);
-        }
-
-        .text-blur-in {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* Video Frame with Rounded Corners */
-        .video-frame {
+        .banner button {
             margin-top: 20px;
-            width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(128, 0, 128, 0.8);
-            animation: pulseGlow 2s infinite;
+            padding: 12px 30px;
+            background-color: #f1c40f;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Black shadow */
+        transition: background-color 0.3s ease;
+        }
+        .banner button:hover {
+            background-color: #f39c12;
         }
 
-        .video-frame iframe {
+
+          /* Video Section */
+        .video-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 10px;
+            background-color: #fff;
+        }
+
+        /* Recorded Class Title with Animation */
+        .recorded-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            animation: titleSlideIn 1.2s ease;
+        }
+        @keyframes titleSlideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Enlarged Video Frame with Glowing Effect */
+        .video-container {
+            width: 90%;
+            max-width: 1200px;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            animation: glowingEffect 3s infinite;
+        }
+        @keyframes glowingEffect {
+            0%, 100% { box-shadow: 0px 0px 20px rgba(106, 90, 205, 0.8); }
+            50% { box-shadow: 0px 0px 30px rgba(150, 100, 255, 0.4); }
+        }
+
+        /* Video Aspect Ratio */
+        .video-container .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: none;
-        }
-
-        /* Pulsating Glow Animation for Video Frame */
-        @keyframes pulseGlow {
-            0%, 100% {
-                box-shadow: 0 0 15px rgba(128, 0, 128, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 25px rgba(128, 0, 128, 1);
-            }
-        }
-
-        /* Card Style */
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            transition: box-shadow 0.3s;
-        }
-
-        .card:hover {
-            box-shadow: 0 0 20px rgba(128, 0, 128, 0.8);
-        }
-
-        /* Toggle Buttons */
-        .toggle-buttons {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .toggle-button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            background-color: #800080;
-            color: white;
-            border: none;
             border-radius: 10px;
+        }
+
+        /* Options Buttons with Enhanced Styles */
+        .options {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .option-btn {
+            padding: 12px 24px;
+            background-color: #6A5ACD;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            margin: 0 10px;
-            transition: background-color 0.3s, transform 0.3s, box-shadow 0.5s;
-            box-shadow: 0 0 10px rgba(128, 0, 128, 0.5); /* Glow effect */
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
-
-        .toggle-button:hover {
-            background-color: #9c27b0;
-            box-shadow: 0 0 15px rgba(156, 39, 176, 1);
+        .option-btn:hover {
+            background-color: #5A4ABD;
             transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        /* Content Section */
+            /* Content Cards with Animation */
+            .content-card {
+                width: 90%;
+                max-width: 1200px;
+                padding: 20px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+                overflow: hidden;
+                position: relative;
+                transform-origin: top;
+            }
+
+            /* Animation styles */
+            .content-section {
+                display: none;
+                opacity: 0;
+                transform: scaleY(0.8) translateY(-20px);
+                animation: slideFromButton 0.4s forwards;
+            }
+
+            /* Keyframes for sliding in from the button */
+            @keyframes slideFromButton {
+                0% {
+                    opacity: 0;
+                    transform: scaleY(0.8) translateY(-20px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scaleY(1) translateY(0);
+                }
+
+        }
+
+        /* Hide other content initially */
         .content-section {
-            margin-top: 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-            max-width: 90%;
-            margin: 20px auto;
-            text-align: left;
-            color: #333;
             display: none;
         }
-
         .content-section.active {
-            opacity: 1;
-            transform: translateY(0);
             display: block;
         }
 
-        /* Download Button with Glow Effect */
-        .download-button {
-            display: inline-block;
+        /* Notes and Quiz Buttons */
+        .download-btn, .start-btn {
+            padding: 8px 16px;
+            background-color: #f1c40f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 15px;
+        }
+        .download-btn:hover, .start-btn:hover {
+            background-color: #f39c12;
+        }
+        /* Discount Banner */
+        .discount-banner {
+            background-color: #FFD700; /* Dark yellow */
+            color: #333;
+            text-align: center;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            position: relative;
+            border-radius: 10px; /* Rounded corners */
+            margin: 20px auto;
+            max-width: 90%;
+            overflow: hidden;
+        }
+
+        .discount-banner-title {
+            color: black;
+            font-size: 1.2rem;
+            font-weight: bold;
+            position: relative;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
+        }
+
+        .marquee-text {
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
             margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            background-color: #4ECDC4;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 0 10px rgba(78, 205, 196, 0.8);
-            transition: box-shadow 0.5s, transform 0.3s;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
-        .download-button:hover {
-            box-shadow: 0 0 15px rgba(78, 205, 196, 1);
+        .marquee-text span {
+            display: inline-block;
+            animation: scroll-left 10s linear infinite;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Back to Home Button */
+        .back-home-btn {
+            background-color: #4B0082; /* Dark purple */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
+        /* Back to Home Button */
+        .back-home-btn {
+            background-color: #4B0082; /* Dark purple */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .back-home-btn:hover {
+            background-color: #551A8B; /* Darker purple */
             transform: scale(1.05);
         }
-
-        /* Back to Homepage Button with Animation */
-        .back-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            background-color: #800080;
+        /* Footer */
+        .footer {
+            background-color: black;
             color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s, transform 0.3s, box-shadow 0.5s;
-            box-shadow: 0 0 10px rgba(128, 0, 128, 0.5); /* Glow effect */
-        }
-
-        .back-button:hover {
-            background-color: #9c27b0;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(156, 39, 176, 1);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .banner {
-                font-size: 1.2rem;
-            }
-            .toggle-button {
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .banner {
-                font-size: 1rem;
-                padding: 15px;
-            }
-            .toggle-button {
-                font-size: 0.8rem;
-            }
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Banner with Dynamic Glow and Text -->
-        <div class="banner" id="banner">
-            Watch Our Latest <span id="changingText" class="text-blur-in">Video Lecture</span>
-        </div>
 
-        <!-- Video Player Frame with Rounded Corners -->
-        <div class="video-frame">
-            <iframe src="https://youtube.com/embed/3NsvWVnNhZ4?si=8ecMKgJxqkR_mHO5" allowfullscreen></iframe>
-        </div>
+    <!-- Banner Section -->
+    <div class="banner" id="banner">
+        <h1>Learn Art <span class="changing-word" id="changingWord">Today</span></h1>
+        <button onclick="scrollToVideo()">Start Learning</button>
+    </div>
 
-        <!-- Toggle Buttons -->
-        <div class="toggle-buttons">
-            <button class="toggle-button" onclick="showContent('description')">Description</button>
-            <button class="toggle-button" onclick="showContent('notes')">Notes</button>
-        </div>
-
-        <!-- Content Sections within a single Card -->
-        <div class="card">
-            <div class="content-section active" id="description">
-                <div class="content-text">
-                    How to make a perfect grid line for artwork | Colourful Soham
-
-In this video I talking about how to draw a perfect grid line for commition artwork 
-
-Camera - IPhone se 2
-Channel owner -Soham Dutta
-                </div>
-            </div>
-
-            <div class="content-section" id="notes">
-                <div class="content-text">
-                    <ul>
-                        <li>Topic 1: Gird Maker Mobile App</li>
-                        <li>Topic 2: Practical examples</li>
-                        <li>Topic 3: Exercises and applications</li>
-                        <li>Step  4: Download your Notes</li>
-                    </ul>
-                    <a href="your-notes-file.pdf" class="download-button" download>Download Notes</a>
-                </div>
+    <!-- Video Section -->
+    <div class="video-section">
+        <div class="recorded-title">Recorded Class</div>
+        <div class="video-container">
+            <div class="iframe-container">
+                <iframe src="https://www.youtube.com/embed/3NsvWVnNhZ4?si=8ecMKgJxqkR_mHO5" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
 
-        <!-- Back to Homepage Button -->
-        <a href="course.html" class="back-button">Back to Courses</a>
+        <!-- Options Buttons -->
+        <div class="options">
+            <button class="option-btn" onclick="showContent('description')">Description</button>
+            <button class="option-btn" onclick="showContent('notes')">Notes</button>
+            <button class="option-btn" onclick="showContent('quiz')">Quiz</button>
+        </div>
+
+        <!-- Content Cards -->
+        <div class="content-card">
+            <div id="description" class="content-section active">
+                <h3>Description</h3>
+                <p>This is a description of the recorded art class. Learn the basics, How to make a perfect grid line for artwork | Colourful Soham
+
+                    In this video I talking about how to draw a perfect grid line for commition artwork 
+
+                    Camera - IPhone se 2
+                    Channel owner -Soham Dutta.</p>
+            </div>
+            <div id="notes" class="content-section">
+                <h3>Notes</h3>
+                <p>Download class notes and reference materials to help you follow along with the lessons.</p>
+                <button class="download-btn"onclick="window.location.href='Gird-maker-notes.pdf';">Download Notes</button>
+            </div>
+            <div id="quiz" class="content-section">
+                <h3>Quiz</h3>
+                <p>Test your understanding with this quiz. Click the button below to start.</p>
+                <button class="start-btn"onclick="window.location.href='quize.html';">Start Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discount Banner -->
+    <div class="discount-banner">
+        <div class="discount-banner-title">‼️IMPORTANT NOTICE‼️</div>
+        <div class="marquee-text">
+            <span>please do not forget the transuction id for re-enter the course!</span>
+        </div>
+    </div>
+
+    <!-- Back to Home Button -->
+    <button class="back-home-btn" onclick="window.location.href='unit.html';">Back to course</button>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 Ankur Art School. All rights reserved.
     </div>
     <script>
-// Banner color and glow update with changing text
-const banner = document.getElementById("banner");
-const changingText = document.getElementById("changingText");
-const phrases = ["Video Lecture", "Class Guide", "In-Depth Tutorial", "Learning Session"];
-const colors = ["#FF6B6B", "#4ECDC4", "#556270", "#C7F464", "#FFC857"];
-let phraseIndex = 0;
-let colorIndex = 0;
+        // Smooth Scroll to Video Section
+        function scrollToVideo() {
+            const videoSection = document.querySelector('.video-section');
+            videoSection.scrollIntoView({ behavior: 'smooth' });
+        }
 
-function changeTextAndColor() {
-    changingText.classList.remove("text-blur-in");
-    changingText.classList.add("text-blur-out");
+        // Text Changing Animation with Blur
+        const changingWord = document.getElementById('changingWord');
+        const words = ["Today", "Creatively", "with Passion"];
+        let wordIndex = 0;
 
-    setTimeout(() => {
-        // Update text and banner color
-        changingText.textContent = phrases[phraseIndex];
-        banner.style.backgroundColor = colors[colorIndex];
-        banner.style.boxShadow = `0 0 15px ${colors[colorIndex]}`;
-        
-        // Update indices for next text and color
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-        colorIndex = (colorIndex + 1) % colors.length;
+        setInterval(() => {
+            // Add blur effect and transition to opacity
+            changingWord.style.opacity = "0";
+            changingWord.style.filter = "blur(4px)";
+            changingWord.style.transform = "scale(0.9)";
 
-        changingText.classList.remove("text-blur-out");
-        changingText.classList.add("text-blur-in");
-    }, 300); // Match the timeout with the CSS transition time
-}
+            setTimeout(() => {
+                // Change word and reset styles for smooth transition
+                wordIndex = (wordIndex + 1) % words.length;
+                changingWord.textContent = words[wordIndex];
+                changingWord.style.opacity = "1";
+                changingWord.style.filter = "blur(0px)";
+                changingWord.style.transform = "scale(1)";
+            }, 500); // Wait for fade-out transition
+        }, 3000); // Interval to change words
+        // Banner Background Color Changing Animation
+        const banner = document.getElementById('banner');
+        const bannerColors = ["#6A5ACD", "#FF6347", "#5DADE2", "#FF69B4", "#FFD700"];
+        let colorIndex = 0;
 
-// Show content based on the button clicked
-function showContent(contentType) {
-    const description = document.getElementById("description");
-    const notes = document.getElementById("notes");
-    
-    // Hide current content and show the requested one
-    if (contentType === 'description') {
-        description.classList.add("active");
-        notes.classList.remove("active");
-    } else if (contentType === 'notes') {
-        notes.classList.add("active");
-        description.classList.remove("active");
-    }
-}
+        setInterval(() => {
+            colorIndex = (colorIndex + 1) % bannerColors.length;
+            banner.style.backgroundColor = bannerColors[colorIndex];
+        }, 3000); // Interval to change colors
+        // Show and hide content sections based on selected option
+            // Function to display content with animation
+            function showContent(sectionId) {
+                const contentSections = document.querySelectorAll('.content-section');
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                    section.style.animation = 'none';  // Reset animation
+                });
 
-// Initial call to change text and color every 4 seconds
-setInterval(changeTextAndColor, 4000);
-</script>
+                const selectedSection = document.getElementById(sectionId);
+                selectedSection.classList.add('active');
+                selectedSection.style.animation = 'slideFromButton 0.4s forwards';
+        }
+    </script>
+
 </body>
 </html>
