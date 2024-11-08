@@ -231,7 +231,18 @@
         <p>&copy; 2024 Ankur Art School. All rights reserved.</p>
     </footer>
 
+    <!-- GSAP and ScrollTo Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollToPlugin.min.js"></script>
+
     <script>
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          gsap.to(window, {duration: 1, scrollTo: this.getAttribute('href')});
+        });
+      });
         const words = ["beautifully", "creatively", "passionately", "masterfully", "uniquely"];
         const banner = document.getElementById("banner");
         const sliderCard = document.getElementById("slider-card");
