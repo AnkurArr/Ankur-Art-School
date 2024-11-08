@@ -124,40 +124,48 @@
             border-radius: 10px;
         }
 
-        .discount-section {
-            background-color: #ffcc00;
+              /* Discount Banner */
+        .discount-banner {
+            background-color: #FFD700; /* Dark yellow */
             color: #333;
             text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px auto;
-            max-width: 800px;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: bold;
             position: relative;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            overflow: hidden; /* To prevent text overflow */
+            border-radius: 10px; /* Rounded corners */
+            margin: 20px auto;
+            max-width: 90%;
+            overflow: hidden;
         }
 
-        .marquee {
-            white-space: nowrap;
-            overflow: hidden;
+        .discount-banner-title {
+            color: black;
+            font-size: 1.2rem;
+            font-weight: bold;
             position: relative;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
         }
 
         .marquee-text {
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-text span {
             display: inline-block;
-            animation: marquee 10s linear infinite;
-            font-size: 1.5rem;
-            padding-left: 100%; /* Start position off-screen */
+            animation: scroll-left 10s linear infinite;
         }
 
-        @keyframes marquee {
-            0% { transform: translate(0); }
-            100% { transform: translate(-100%); }
-        }
-
-        .discount-section h3 {
-            font-size: 2rem;
-            margin: 0;
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
 
         footer {
@@ -211,11 +219,11 @@
             </div>
         </div>
     </div>
-
-    <div class="discount-section">
-        <h3>Exclusive Offer!</h3>
-        <div class="marquee">
-            <div class="marquee-text">Get 80% off on your first course enrollment! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+   <!-- Discount Banner -->
+     <div class="discount-banner">
+        <div class="discount-banner-title">Exclusive Offers!</div>
+        <div class="marquee-text">
+            <span>Enroll now to get 50% off!! 🎨 limited time offer😍 </span>
         </div>
     </div>
 
